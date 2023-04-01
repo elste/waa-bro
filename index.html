@@ -1,2 +1,59 @@
-<div id="topBar"><a href="#" onclick="load_home()"> HOME </a></div>
-<div id="content"></div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/bulma.min.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <section class="section">
+      <div class="container">
+        <object
+          id="obj"
+          data="01.html"
+          width="100%"
+          height="100%"
+          class="waa-slide-object"
+        ></object>
+      </div>
+    </section>
+
+    <script>
+      const slides = ["01", "02", "03", "04", "05", "06", "07"];
+      let curSlideIndex = 0;
+      let curSlide = `${slides[curSlideIndex]}.html`;
+      document.addEventListener('keyup', checkKey);
+
+      function checkKey(e) {
+        e = e || window.event;
+
+        if (e.keyCode == "38") {
+          // up arrow
+        } else if (e.keyCode == "40") {
+          // down arrow
+        } else if (e.keyCode == "37") {
+          prevSlide();
+        } else if (e.keyCode == "39") {
+          nextSlide();
+        }
+      }
+
+      function prevSlide() {
+        curSlideIndex--;
+        curSlide = `${slides[curSlideIndex]}.html`;
+        const obj = document.getElementById("obj");
+        obj.setAttribute("data", curSlide);
+      }
+
+      function nextSlide() {
+        curSlideIndex++;
+        curSlide = `${slides[curSlideIndex]}.html`;
+        const obj = document.getElementById("obj");
+        obj.setAttribute("data", curSlide);
+      }
+    </script>
+  </body>
+</html>
