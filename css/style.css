@@ -4,7 +4,6 @@
 
 .waa-slide {
   height: calc(100vh - 40px);
-  width: calc(100vw - 200px);
 }
 
 .waa-height-100 {
@@ -13,6 +12,11 @@
 
 .waa-height-90 {
   height: 90%;
+}
+
+
+.waa-width-100 {
+  width: 100%;
 }
 
 /* SLIDES */
