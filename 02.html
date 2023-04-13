@@ -1,8 +1,35 @@
 <!DOCTYPE html>
 
-<link rel="stylesheet" href="./css/bulma.min.css" />
-<link rel="stylesheet" href="./css/style.css" />
+<link rel="stylesheet" href="./css/normalize.css" />
+<link rel="stylesheet" href="./css/bulma.css" />
+<link rel="stylesheet" href="./css/main.css" />
 
-<article class="tile is-child notification is-dark">
-  <div class="content waa-slide slide-02"></div>
-</article>
+<div class="waa-slide has-background-black">
+  <div class="columns is-vcentered waa-vh-100">
+    <div class="column">
+      <div class="has-text-centered waa-text-15 is-clickable" onclick="toggle()">
+        <div class="">🪩</div>
+        <div class="mt-6" >🎶😎🎵</div>
+        <div class="mt-6">🎤🎛️🎚️</div>
+        <div class="mt-6">🙃🤩🥳😍😵‍💫</div>
+      </div>
+      <div class="has-text-centered"></div>
+        <a class="is-fullwidth" href="./disco.html" target="_blank">disco 2</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<audio id="dj-play" src="./music/test.mp3" autoplay></audio>
+
+<script>
+  function toggle() {
+    const audioEl = document.getElementById("dj-play");
+    if (audioEl.paused) {
+        audioEl.play();
+    }
+    else {
+        audioEl.pause();
+    }
+  }  
+</script>

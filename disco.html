@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="./css/normalize.css" />
+<link rel="stylesheet" href="./css/bulma.css" />
+<link rel="stylesheet" href="./css/main.css" />
+
+<div id="waa-container">
+  <div class="waa-slide has-background-black">
+    <div class="columns is-vcentered waa-vh-100">
+      <div class="column">
+        <div
+          class="has-text-centered waa-text-15 is-clickable"
+          onclick="toggle()"
+        >
+          <div class="">🪩</div>
+          <div class="music-off mt-6">😎</div>
+          <div class="music-on mt-6">🎶😎🎵</div>
+          <div class="mt-6">🎤🎛️🎚️</div>
+          <div class="music-off mt-6">😒😶😢😭😴</div>
+          <div class="music-on mt-6">🙃🤩🥳😍😵‍💫</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<audio id="dj-play" src="./music/test.mp3" autoplay></audio>
+
+<script>
+  function showElements(play) {
+    const elsOn = [...document.getElementsByClassName("music-on")];
+    elsOn.forEach((el) => (el.style.display  = play ? "block" : "none"));
+
+    const elsOff = [...document.getElementsByClassName("music-off")];
+    elsOff.forEach((el) => (el.style.display  = play ? "none" : "block"));
+  }
+
+  function toggle() {
+    const audioEl = document.getElementById("dj-play");
+    if (audioEl.paused) {
+      audioEl.play();
+      showElements(true);
+    } else {
+      audioEl.pause();
+
+      showElements(false);
+    }
+  }
+
+
+  showElements(false);
+</script>
