@@ -13,7 +13,7 @@
     <div id="waa-container">
       <object
         id="obj"
-        data="01.html"
+        data="08_web_audio_context.html"
         width="100%"
         height="100%"
         class="waa-slide-object"
@@ -21,19 +21,26 @@
     </div>
 
     <script>
-      const slides = ["01", "02", "03", "04", "05", "06", "07"];
+      const slides = ["01", "02", "02b", "03", "04", "05", "06", "07", '08_web_audio_context'];
       let curSlideIndex = 0;
       let curSlide = `${slides[curSlideIndex]}.html`;
+
+      window.onkeyup = function (e) {
+        var key = e.keyCode ? e.keyCode : e.which;
+
+        if (e.keyCode == "38") {
+          console.log("asdaadasdasdasdasdasd");
+        } else if (e.keyCode == "40") {
+          console.log("cvcvbvbvbbbb");
+        }
+      };
+
       document.addEventListener("keyup", checkKey);
 
       function checkKey(e) {
         e = e || window.event;
 
-        if (e.keyCode == "38") {
-          // up arrow
-        } else if (e.keyCode == "40") {
-          // down arrow
-        } else if (e.keyCode == "37") {
+        if (e.keyCode == "37") {
           prevSlide();
         } else if (e.keyCode == "39") {
           nextSlide();

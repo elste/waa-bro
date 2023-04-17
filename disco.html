@@ -4,6 +4,23 @@
 <link rel="stylesheet" href="./css/bulma.css" />
 <link rel="stylesheet" href="./css/main.css" />
 
+<style>
+  @keyframes blink {
+    25% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 0.1;
+    }
+    75% {
+      opacity: 0.5;
+    }
+  }
+  .blink {
+    animation: blink 1s step-start 0s infinite;
+  }
+</style>
+
 <div id="waa-container">
   <div class="waa-slide has-background-black">
     <div class="columns is-vcentered waa-vh-100">
@@ -12,12 +29,20 @@
           class="has-text-centered waa-text-15 is-clickable"
           onclick="toggle()"
         >
-          <div class="">🪩</div>
-          <div class="music-off mt-6">😎</div>
-          <div class="music-on mt-6">🎶😎🎵</div>
-          <div class="mt-6">🎤🎛️🎚️</div>
-          <div class="music-off mt-6">😒😶😢😭😴</div>
-          <div class="music-on mt-6">🙃🤩🥳😍😵‍💫</div>
+          <div id="disco">
+            <div class="">🪩</div>
+            <div class="music-off mt-6">🎧</div>
+            <div class="music-on mt-6">🎶😎🎵</div>
+            <div class="mt-6">🎤🎛️🎚️</div>
+            <div class="music-off mt-6">😒😶😢😭😴</div>
+            <div class="music-on mt-6">🙃🤩🥳😍😵‍💫</div>
+            <div class="waa-text-5 music-off mt-6 has-text-grey">
+              meglio controllare la console...
+            </div>
+          </div>
+          <div class="waa-text-5 music-on mt-6 has-text-warning is-family-code">
+            Benvenuti al MUG! SU LE MANIIII!!!
+          </div>
         </div>
       </div>
     </div>
@@ -29,10 +54,10 @@
 <script>
   function showElements(play) {
     const elsOn = [...document.getElementsByClassName("music-on")];
-    elsOn.forEach((el) => (el.style.display  = play ? "block" : "none"));
+    elsOn.forEach((el) => (el.style.display = play ? "block" : "none"));
 
     const elsOff = [...document.getElementsByClassName("music-off")];
-    elsOff.forEach((el) => (el.style.display  = play ? "none" : "block"));
+    elsOff.forEach((el) => (el.style.display = play ? "none" : "block"));
   }
 
   function toggle() {
@@ -40,13 +65,13 @@
     if (audioEl.paused) {
       audioEl.play();
       showElements(true);
+      document.getElementById("disco").classList.add("blink");
     } else {
       audioEl.pause();
-
       showElements(false);
+      document.getElementById("disco").classList.remove("blink");
     }
   }
-
 
   showElements(false);
 </script>
