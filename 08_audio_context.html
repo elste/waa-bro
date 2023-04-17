@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="./css/normalize.css" />
+<link rel="stylesheet" href="./css/bulma.css" />
+
+<link rel="stylesheet" href="./css/prism.css" />
+<link rel="stylesheet" href="./css/main.css" />
+
+<div class="waa-slide has-background-primary is-family-primary has-text-white">
+  <div class="is-flex is-flex-direction-column waa-vh-100 p-3">
+    <div class="waa-text-7">Hello Web Audio API</div>
+    <div
+      class="is-flex is-flex-direction-column is-justify-content-center waa-h-100"
+    >
+      <div class="waa-text-5">AudioContext</div>
+      <div class="columns">
+        <div class="column">
+          <div class="waa-text-2">
+            <pre class="language-js line-numbers"><code>let context;
+function init() {
+    try {
+      context = new AudioContext();
+    }
+    catch(e) {
+      alert('Web Audio API is not supported');
+    }
+}</code></pre>
+          </div>
+        </div>
+        <div class="column is-flex is-align-items-center">
+          <figure class="image">
+            <img src="./images/audiocontext.png" />
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="./js/prism.js"></script>
+<script>
+  Prism.plugins.customClass.map({ number: "pr-number" });
+</script>
