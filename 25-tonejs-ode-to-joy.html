@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="./css/normalize.css" />
+<link rel="stylesheet" href="./css/bulma.css" />
+<link rel="stylesheet" href="./css/prism.css" />
+<link rel="stylesheet" href="./css/main.css" />
+<script src="./js/waa-slide.js"></script>
+
+<div id="waa-container">
+  <div
+    class="waa-slide has-background-link-dark is-family-primary has-text-white"
+  >
+    <div class="is-flex is-flex-direction-column waa-vh-100 p-3">
+      <div class="waa-text-7">
+        Ludwig van Beethoven - Ode to Joy - Tone.js ?
+      </div>
+
+      <div class="columns is-centered is-vcentered waa-h-100">
+        <div class="column is-8">
+          <div class="waa-text-2">
+            <pre
+              class="language-js line-numbers"
+              data-start="34"
+            ><code>part1.start(0);
+part1.stop("1m");
+
+part2.start("1m");
+part2.stop("2m");
+
+part1.start("2m");
+part1.stop("3m");
+
+part3.start("3m");
+part3.stop("4m");
+
+Tone.Transport.start();</code></pre>
+          </div>
+
+          <div class="columns is-centered mt-1">
+            <div class="waa-text-5 is-clickable" onclick="play()">▶️</div>
+            <div class="waa-text-5 is-clickable" onclick="stop()">⏹️</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="./js/prism.js"></script>
+<script>
+  Prism.plugins.customClass.map({ number: "pr-number" });
+</script>
+
+<script src="./js/Tone.js"></script>
+<script>
+  function play() {
+    const synth = new Tone.Synth().toDestination();
+
+    Tone.Transport.timeSignature = [3, 4];
+    Tone.Transport.bpm.value = 80;
+
+    const part1 = new Tone.Part(
+      (time, value) => {
+        synth.triggerAttackRelease(value.note, value.duration, time);
+      },
+      [
+        { time: 0, note: "G4", duration: "8n" },
+        { time: "0:0:2", note: "G4", duration: "8n" },
+        { time: "0:1", note: "A4", duration: "4n" },
+        { time: "0:2", note: "G4", duration: "4n" },
+      ]
+    );
+
+    const part2 = new Tone.Part(
+      (time, value) => {
+        synth.triggerAttackRelease(value.note, value.duration, time);
+      },
+      [
+        { time: 0, note: "C5", duration: "4n" },
+        { time: "0:1", note: "B4", duration: "2n" },
+      ]
+    );
+
+    const part3 = new Tone.Part(
+      (time, value) => {
+        synth.triggerAttackRelease(value.note, value.duration, time);
+      },
+      [
+        { time: 0, note: "D5", duration: "4n" },
+        { time: "0:1", note: "C5", duration: "2n" },
+      ]
+    );
+
+    //TRANSPORT
+    part1.start(0);
+    part1.stop("1m");
+
+    part2.start("1m");
+    part2.stop("2m");
+
+    part1.start("2m");
+    part1.stop("3m");
+
+    part3.start("3m");
+    part3.stop("4m");
+
+    Tone.Transport.start();
+  }
+
+  function stop() {
+    Tone.Transport.stop();
+  }
+</script>

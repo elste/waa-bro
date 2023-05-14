@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="./css/normalize.css" />
+<link rel="stylesheet" href="./css/bulma.css" />
+<link rel="stylesheet" href="./css/prism.css" />
+<link rel="stylesheet" href="./css/main.css" />
+<script src="./js/waa-slide.js"></script>
+
+<div id="waa-container">
+  <div class="waa-slide has-background-link is-family-primary has-text-white">
+    <div class="is-flex is-flex-direction-column waa-vh-100 p-3">
+      <div class="waa-text-7 mb-2">
+        Ludwig van Beethoven - Ode to Joy - ADSR
+      </div>
+      <div class="waa-spacer-5"></div>
+      <div class="columns is-centered waa-h-100">
+        <div class="column is-5">
+          <div class="waa-text-2">
+            <pre
+              class="language-js line-numbers"
+            ><code>let time = context.currentTime;
+oscNode.start(time);
+time = playNote(Mi, time, quarter);
+time = playNote(Mi, time, quarter);
+time = playNote(Fa, time, quarter);
+time = playNote(Sol, time, quarter);
+
+time = playNote(Sol, time, quarter);
+time = playNote(Fa, time, quarter);
+time = playNote(Mi, time, quarter);
+time = playNote(Re, time, quarter);
+
+time = playNote(Do, time, quarter);
+time = playNote(Do, time, quarter);
+time = playNote(Re, time, quarter);
+time = playNote(Mi, time, quarter);
+
+time = playNote(Mi, time, longQuarter);
+time = playNote(Re, time, eighth);
+time = playNote(Re, time, half);</code></pre>
+          </div>
+        </div>
+        <div class="column is-5">
+          <div class="waa-text-2">
+            <pre
+              class="language-js line-numbers"
+              data-start="21"
+            ><code>time = playNote(Mi, time, quarter);
+time = playNote(Mi, time, quarter);
+time = playNote(Fa, time, quarter);
+time = playNote(Sol, time, quarter);
+
+time = playNote(Sol, time, quarter);
+time = playNote(Fa, time, quarter);
+time = playNote(Mi, time, quarter);
+time = playNote(Re, time, quarter);
+
+time = playNote(Do, time, quarter);
+time = playNote(Do, time, quarter);
+time = playNote(Re, time, quarter);
+time = playNote(Mi, time, quarter);
+
+time = playNote(Re, time, longQuarter);
+time = playNote(Do, time, eighth);
+time = playNote(Do, time, half);
+oscNode.stop(time);</code></pre>
+          </div>
+          <div class="columns is-centered mt-1">
+            <div class="waa-text-5 is-clickable" onclick="play()">▶️</div>
+            <div class="waa-text-5 is-clickable" onclick="stop()">⏹️</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="./js/prism.js"></script>
+<script>
+  Prism.plugins.customClass.map({ number: "pr-number" });
+</script>
+
+<script>
+  let context;
+
+  const Do = 261.6;
+  const Re = 293.7;
+  const Mi = 329.6;
+  const Fa = 349.2;
+  const Sol = 392.0;
+  const La = 440.0;
+  const Si = 493.9;
+
+  const quarter = 60 / 144;
+  const half = quarter * 2;
+  const eighth = quarter / 2;
+  const longQuarter = quarter + eighth;
+
+  function init() {
+    try {
+      context = new AudioContext();
+    } catch (e) {
+      alert("Web Audio API is not supported");
+    }
+  }
+
+  function play() {
+    const oscNode = context.createOscillator();
+    const gainNode = context.createGain();
+    oscNode.connect(gainNode);
+    gainNode.connect(context.destination);
+
+    function playNote(freq, start, dur) {
+      const attackTime = dur * 0.03;
+      const decayTime = dur * 0.97;
+      oscNode.frequency.setValueAtTime(freq, start);
+      gainNode.gain.setValueAtTime(0, start);
+      gainNode.gain.linearRampToValueAtTime(1, start + attackTime);
+      gainNode.gain.linearRampToValueAtTime(0, start + attackTime + decayTime);
+      return start + dur;
+    }
+
+    let time = context.currentTime;
+    oscNode.start(time);
+    time = playNote(Mi, time, quarter);
+    time = playNote(Mi, time, quarter);
+    time = playNote(Fa, time, quarter);
+    time = playNote(Sol, time, quarter);
+
+    time = playNote(Sol, time, quarter);
+    time = playNote(Fa, time, quarter);
+    time = playNote(Mi, time, quarter);
+    time = playNote(Re, time, quarter);
+
+    time = playNote(Do, time, quarter);
+    time = playNote(Do, time, quarter);
+    time = playNote(Re, time, quarter);
+    time = playNote(Mi, time, quarter);
+
+    time = playNote(Mi, time, longQuarter);
+    time = playNote(Re, time, eighth);
+    time = playNote(Re, time, half);
+
+    time = playNote(Mi, time, quarter);
+    time = playNote(Mi, time, quarter);
+    time = playNote(Fa, time, quarter);
+    time = playNote(Sol, time, quarter);
+
+    time = playNote(Sol, time, quarter);
+    time = playNote(Fa, time, quarter);
+    time = playNote(Mi, time, quarter);
+    time = playNote(Re, time, quarter);
+
+    time = playNote(Do, time, quarter);
+    time = playNote(Do, time, quarter);
+    time = playNote(Re, time, quarter);
+    time = playNote(Mi, time, quarter);
+
+    time = playNote(Re, time, longQuarter);
+    time = playNote(Do, time, eighth);
+    time = playNote(Do, time, half);
+    oscNode.stop(time);
+  }
+
+  function stop() {
+    if (!!context) context.close();
+  }
+
+  init();
+</script>

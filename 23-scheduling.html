@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="./css/normalize.css" />
+<link rel="stylesheet" href="./css/bulma.css" />
+<link rel="stylesheet" href="./css/prism.css" />
+<link rel="stylesheet" href="./css/main.css" />
+<script src="./js/waa-slide.js"></script>
+
+<div id="waa-container">
+  <div
+    class="waa-slide has-background-grey-light is-family-primary has-text-white"
+  >
+    <div class="is-flex is-flex-direction-column waa-vh-100 p-3">
+      <div class="waa-text-7">Scheduling</div>
+      <div class="waa-spacer-10"></div>
+
+      <div class="columns is-centered waa-h-100">
+        <div class="column is-4">
+          <div class="waa-text-5 mb-1">Transport</div>
+          <figure class="image">
+            <img src="./images/scheduling.png" />
+          </figure>
+        </div>
+        <div class="column is-6">
+          <div class="waa-spacer-5 mb-1"></div>
+
+          <div class="waa-text-2">
+            <pre
+              class="language-js line-numbers"
+            ><code>const synthA = new Tone.FMSynth().toDestination();
+const synthB = new Tone.AMSynth().toDestination();
+Tone.Transport.bpm.value = 40;
+//play a note every quarter-note
+const loopA = new Tone.Loop(time => {
+  synthA.triggerAttackRelease("G4", "8n", time);
+}, "4n").start(0);
+//play another note every off quarter-note, by starting it "8n"
+const loopB = new Tone.Loop(time => {
+  synthB.triggerAttackRelease("E4", "8n", time);
+}, "4n").start("8n");
+// the loops start when the Transport is started
+Tone.Transport.start();
+// ramp up to 800 bpm over 20 seconds
+Tone.Transport.bpm.rampTo(800, 20);</code></pre>
+          </div>
+          <div class="columns is-centered mt-1">
+            <div class="waa-text-5 is-clickable" onclick="play()">▶️</div>
+            <div class="waa-text-5 is-clickable" onclick="stop()">⏹️</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="./js/prism.js"></script>
+<script>
+  Prism.plugins.customClass.map({ number: "pr-number" });
+</script>
+
+<script src="./js/Tone.js"></script>
+<script>
+  function play() {
+    const synthA = new Tone.FMSynth().toDestination();
+    const synthB = new Tone.AMSynth().toDestination();
+    Tone.Transport.bpm.value = 40;
+    //play a note every quarter-note
+    const loopA = new Tone.Loop((time) => {
+      synthA.triggerAttackRelease("G4", "8n", time);
+    }, "4n").start(0);
+    //play another note every off quarter-note, by starting it "8n"
+    const loopB = new Tone.Loop((time) => {
+      synthB.triggerAttackRelease("E4", "8n", time);
+    }, "4n").start("8n");
+    // the loops start when the Transport is started
+    Tone.Transport.start();
+    // ramp up to 800 bpm over 20 seconds
+    Tone.Transport.bpm.rampTo(800, 20);
+  }
+
+  function stop() {
+    Tone.Transport.stop();
+  }
+</script>

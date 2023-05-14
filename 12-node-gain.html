@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="./css/normalize.css" />
+<link rel="stylesheet" href="./css/bulma.css" />
+<link rel="stylesheet" href="./css/prism.css" />
+<link rel="stylesheet" href="./css/main.css" />
+<script src="./js/waa-slide.js"></script>
+
+<div id="waa-container">
+  <div
+    class="waa-slide has-background-grey-light is-family-primary has-text-white"
+  >
+    <div class="is-flex is-flex-direction-column waa-vh-100 p-3">
+      <div class="waa-text-7">Nodes</div>
+
+      <div class="columns is-centered is-vcentered waa-h-100">
+        <div class="column is-8">
+          <div class="waa-text-5 mb-1">Gain</div>
+          <figure class="image">
+            <img src="./images/gain-1.png" />
+          </figure>
+          <div class="waa-text-3">
+            <pre
+              class="language-js line-numbers"
+            ><code>const oscNode = context.createOscillator();
+const gainNode = context.createGain();
+oscNode.connect(gainNode);
+gainNode.connect(context.destination);
+gainNode.gain.value = 1;
+oscNode.start(context.currentTime);
+oscNode.stop(context.currentTime + 2);
+gainNode.gain.setValueAtTime(0.3, context.currentTime + 1);</code></pre>
+          </div>
+          <figure class="image">
+            <img src="./images/gain-2.png" />
+          </figure>
+         
+          <div class="columns is-centered mt-1">
+            <div class="waa-text-5 is-clickable" onclick="play()">▶️</div>
+            <div class="waa-text-5 is-clickable" onclick="stop()">⏹️</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<script src="./js/prism.js"></script>
+<script>
+  Prism.plugins.customClass.map({ number: "pr-number" });
+</script>
+
+<script>
+  let context;
+
+  function init() {
+    try {
+      context = new AudioContext();
+    } catch (e) {
+      alert("Web Audio API is not supported");
+    }
+  }
+
+  function play() {
+    const oscNode = context.createOscillator();
+    const gainNode = context.createGain();
+    gainNode.gain.value = 1;
+    oscNode.connect(gainNode);
+    gainNode.connect(context.destination);
+    oscNode.start(context.currentTime);
+    oscNode.stop(context.currentTime + 2);
+    gainNode.gain.setValueAtTime(0.3, context.currentTime + 1);
+  }
+
+  function stop() {
+    if (!!context) context.close();
+  }
+
+  init();
+</script>

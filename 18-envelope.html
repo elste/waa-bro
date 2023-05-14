@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="./css/normalize.css" />
+<link rel="stylesheet" href="./css/bulma.css" />
+<link rel="stylesheet" href="./css/prism.css" />
+<link rel="stylesheet" href="./css/main.css" />
+<script src="./js/waa-slide.js"></script>
+
+<div id="waa-container">
+  <div class="waa-slide has-background-link is-family-primary has-text-white">
+    <div class="is-flex is-flex-direction-column waa-vh-100 p-3">
+      <div class="waa-text-7 mb-2">Envelope</div>
+      <div class="waa-spacer-10"></div>
+      <div class="columns is-centered waa-h-100">
+        <div class="column is-4">
+          <div class="waa-text-5 mb-1">ADSR</div>
+          <figure class="image">
+            <img src="./images/envelope-adsr.png" />
+          </figure>
+          <div class="waa-spacer-3"></div>
+          <figure class="image">
+            <img src="./images/envelope-piano.png" />
+          </figure>
+        </div>
+        <div class="column is-6">
+          <div class="waa-spacer-5 mb-1"></div>
+
+          <div class="waa-text-2">
+            <pre class="language-js line-numbers">
+<code>function playNote(freq, start, dur) {
+  const attackTime = dur * 0.03;
+  const decayTime = dur * 0.97;
+  oscNode.frequency.setValueAtTime(freq, start);
+  gainNode.gain.setValueAtTime(0, start);
+  gainNode.gain
+    .linearRampToValueAtTime(1, start + attackTime);
+  gainNode.gain
+    .linearRampToValueAtTime(0, start + attackTime + decayTime);
+  return start + dur;
+}
+
+...
+time = playNote(440, time, 1);
+time = playNote(440, time, 1);
+...
+</code></pre>
+          </div>
+          <div class="columns is-centered mt-1">
+            <div class="waa-text-5 is-clickable" onclick="play()">▶️</div>
+            <div class="waa-text-5 is-clickable" onclick="stop()">⏹️</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="./js/prism.js"></script>
+<script>
+  Prism.plugins.customClass.map({ number: "pr-number" });
+</script>
+
+<script>
+  let context;
+  let oscNode;
+  let gainNode;
+
+  function init() {
+    try {
+      context = new AudioContext();
+    } catch (e) {
+      alert("Web Audio API is not supported");
+    }
+  }
+
+  function playNote(freq, start, dur) {
+    const attackTime = dur * 0.03;
+    const decayTime = dur * 0.97;
+    oscNode.frequency.setValueAtTime(freq, start);
+    gainNode.gain.setValueAtTime(0, start);
+    gainNode.gain.linearRampToValueAtTime(1, start + attackTime);
+    gainNode.gain.linearRampToValueAtTime(0, start + attackTime + decayTime);
+    return start + dur;
+  }
+
+  function play() {
+    oscNode = context.createOscillator();
+    gainNode = context.createGain();
+    oscNode.connect(gainNode);
+    gainNode.connect(context.destination);
+
+    let time = context.currentTime;
+
+    oscNode.start(time);
+
+    time = playNote(440, time, 1);
+    time = playNote(440, time, 1);
+
+    oscNode.stop(time);
+  }
+
+  function stop() {
+    if (!!context) context.close();
+  }
+
+  init();
+</script>

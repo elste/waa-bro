@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="./css/normalize.css" />
+<link rel="stylesheet" href="./css/bulma.css" />
+<link rel="stylesheet" href="./css/prism.css" />
+<link rel="stylesheet" href="./css/main.css" />
+<script src="./js/waa-slide.js"></script>
+
+<div id="waa-container">
+  <div
+    class="waa-slide has-background-info is-family-primary has-text-white"
+  >
+    <div class="is-flex is-flex-direction-column waa-vh-100 p-3">
+      <div class="waa-text-7  mb-6">Timing</div>
+      <div class="columns is-centered ">
+        <div class="column is-7">
+          <div class="waa-text-5">JS time vs currentTime</div>
+          <div class="waa-text-3">integer vs double</div>
+        </div>
+      </div>
+      <div class="columns is-centered waa-h-100">
+        <div class="column is-3">
+          <div class="waa-text-4 mb-1">BPM</div>
+          <figure class="image">
+            <img src="./images/timing-js.png" />
+          </figure>
+        </div>
+
+        <div class="column is-1"></div>
+
+        <div class="column is-3">
+          <div class="waa-text-4 mb-5">Sample rate (Hz)</div>
+          <div class="waa-text-3 mb-4">Frequenza di campionamento</div>
+          <div class="waa-text-4 mb-4"> = 44100 Hz</div>
+          <div class="waa-text-4 mb-4"> = 1 / 44100</div>
+          <div class="waa-text-4 mb-4"> = 0.00002267573 s</div>
+          <div class="waa-text-4 mb-4"> = 0.02267573 ms</div>
+
+        </div>
+
+      </div>
+
+      <div class="waa-text-3 has-text-centered">
+        https://web.dev/audio-scheduling/
+      </div>
+      
+    </div>
+
+  </div>
+</div>
+<script src="./js/prism.js"></script>
+<script>
+  Prism.plugins.customClass.map({ number: "pr-number" });
+</script>
+
+<script>
+  let context;
+
+  function init() {
+    try {
+      context = new AudioContext();
+    } catch (e) {
+      alert("Web Audio API is not supported");
+    }
+  }
+
+  function play() {
+    const oscNode = context.createOscillator();
+    const gainNode = context.createGain();
+    gainNode.gain.value = 1;
+    oscNode.connect(gainNode);
+    gainNode.connect(context.destination);
+    oscNode.start(context.currentTime);
+    oscNode.stop(context.currentTime + 2);
+    gainNode.gain.setValueAtTime(0.3, context.currentTime + 1);
+  }
+
+  function stop() {
+    if (!!context) context.close();
+  }
+
+  init();
+</script>

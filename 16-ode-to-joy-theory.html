@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="./css/normalize.css" />
+<link rel="stylesheet" href="./css/bulma.css" />
+<link rel="stylesheet" href="./css/prism.css" />
+<link rel="stylesheet" href="./css/main.css" />
+<script src="./js/waa-slide.js"></script>
+
+<div id="waa-container">
+  <div class="waa-slide has-background-link is-family-primary has-text-white">
+    <div class="is-flex is-flex-direction-column waa-vh-100 p-3">
+      <div class="waa-text-7 mb-6">Ludwig van Beethoven - Ode to Joy</div>
+      <div class="columns is-centered is-vcentered waa-h-50 mb-6">
+        <div class="column is-10">
+          <figure class="image">
+            <img src="./images/first-song-tabs.png" />
+          </figure>
+        </div>
+      </div>
+      <div class="columns is-centered waa-h-40">
+        <div class="column is-3">
+          <div class="waa-text-3 mb-3 has-text-weight-bold">
+            Frequenze delle note
+          </div>
+          <div class="waa-text-3 mb-3">Do = 261.6 Hz</div>
+          <div class="waa-text-3 mb-3">Re = 293.7 Hz</div>
+          <div class="waa-text-3 mb-3">Mi = 329.6 Hz</div>
+          <div class="waa-text-3 mb-3">Fa = 349.2 Hz</div>
+          <div class="waa-text-3 mb-3">Sol = 392.0 Hz</div>
+          <div class="waa-text-3 mb-3">La = 440.0 Hz</div>
+          <div class="waa-text-3 mb-3">Si = 493.9 Hz</div>
+        </div>
+        <div class="column is-3">
+          <div class="waa-text-3 mb-3 has-text-weight-bold">
+            Durata delle note
+          </div>
+          <figure class="image">
+            <img src="./images/first-song-bpm.png" />
+          </figure>
+        </div>
+        <div class="column is-4">
+          <div class="waa-spacer-3 mb-3">    
+          </div>
+          <div class="waa-text-2">
+            <pre
+              class="language-js line-numbers"
+            ><code>const Do = 261.6;
+const Re = 293.7;
+const Mi = 329.6;
+const Fa = 349.2;
+const Sol = 392.0;
+const La = 440.0;
+const Si = 493.9;
+
+const quarter = 60 / 144;
+const half = quarter * 2;
+const eighth = quarter / 2;
+const longQuarter = quarter + eighth;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="./js/prism.js"></script>
+<script>
+  Prism.plugins.customClass.map({ number: "pr-number" });
+</script>
+
+<script>
+  let context;
+
+  function init() {
+    try {
+      context = new AudioContext();
+    } catch (e) {
+      alert("Web Audio API is not supported");
+    }
+  }
+
+  function play() {
+    const oscNode = context.createOscillator();
+    const gainNode = context.createGain();
+    gainNode.gain.value = 1;
+    oscNode.connect(gainNode);
+    gainNode.connect(context.destination);
+    oscNode.start(context.currentTime);
+    oscNode.stop(context.currentTime + 2);
+    gainNode.gain.setValueAtTime(0.3, context.currentTime + 1);
+  }
+
+  function stop() {
+    if (!!context) context.close();
+  }
+
+  init();
+</script>

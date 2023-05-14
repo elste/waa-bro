@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="./css/normalize.css" />
+<link rel="stylesheet" href="./css/bulma.css" />
+<link rel="stylesheet" href="./css/prism.css" />
+<link rel="stylesheet" href="./css/main.css" />
+<script src="./js/waa-slide.js"></script>
+
+<div id="waa-container">
+  <div
+    class="waa-slide has-background-danger-dark is-family-primary has-text-white"
+  >
+    <div class="is-flex is-flex-direction-column waa-vh-100 p-3">
+      <div class="waa-text-7">SAL</div>
+
+      <div class="columns is-centered is-vcentered waa-h-100">
+        <div class="column is-5">
+          <div class="waa-text-5">Done</div>
+          <div class="waa-text-3 content">
+            <ul>
+              <li>Generare dei suoni</li>
+              <li>Gestire i tempi</li>
+              <li>Riprodurre delle sequenze</li>
+              <li>Manipolare frequenza, durata ed envelope</li>
+            </ul>
+          </div>
+        </div>
+        <div class="column is-5">
+          <div class="waa-text-5">To do</div>
+          <div class="waa-text-3 content">
+            <ul>
+              <li>Creare strumenti (melodia, accompagnamento, bassi, percussioni)</li>
+              <li>Aggiungere le frequenze per più ottave</li>
+              <li>Aggiungere le durate delle note</li>
+              <li>Ripetere le sequenze</li>
+              <li>Scrivere sequenze in modo conciso</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="waa-text-3 has-text-centered">
+        si potrebbe organizzare il codice in un framework 🤔...
+      </div>
+    </div>
+  </div>
+</div>
+<script src="./js/prism.js"></script>
+<script>
+  Prism.plugins.customClass.map({ number: "pr-number" });
+</script>
+
+<script>
+  let context;
+
+  function init() {
+    try {
+      context = new AudioContext();
+    } catch (e) {
+      alert("Web Audio API is not supported");
+    }
+  }
+
+  function play() {
+    const oscNode = context.createOscillator();
+    const gainNode = context.createGain();
+    gainNode.gain.value = 1;
+    oscNode.connect(gainNode);
+    gainNode.connect(context.destination);
+    oscNode.start(context.currentTime);
+    oscNode.stop(context.currentTime + 2);
+    gainNode.gain.setValueAtTime(0.3, context.currentTime + 1);
+  }
+
+  function stop() {
+    if (!!context) context.close();
+  }
+
+  init();
+</script>

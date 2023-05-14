@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="./css/normalize.css" />
+<link rel="stylesheet" href="./css/bulma.css" />
+<link rel="stylesheet" href="./css/prism.css" />
+<link rel="stylesheet" href="./css/main.css" />
+<script src="./js/waa-slide.js"></script>
+
+<div id="waa-container">
+  <div
+    class="waa-slide has-background-grey-light is-family-primary has-text-white"
+  >
+    <div class="is-flex is-flex-direction-column waa-vh-100 p-3">
+      <div class="waa-text-7">Scheduling</div>
+
+      <div class="columns is-centered is-vcentered waa-h-100">
+        <div class="column is-8">
+          <div class="waa-text-5 mb-1">Parts</div>
+          <figure class="image">
+            <img src="./images/happy-birthday.png" />
+          </figure>
+          <div class="waa-text-2">
+            <pre
+              class="language-js line-numbers"
+            ><code>const synth = new Tone.Synth().toDestination();
+Tone.Transport.timeSignature = [3, 4];
+Tone.Transport.bpm.value = 80;
+
+const part1 = new Tone.Part(
+  (time, value) => {
+    synth.triggerAttackRelease(value.note, value.duration, time);
+  },
+  [
+    { time: 0, note: "G4", duration: "8n" },
+    { time: "0:0:2", note: "G4", duration: "8n" },
+    { time: "0:1", note: "A4", duration: "4n" },
+    { time: "0:2", note: "G4", duration: "4n" },
+  ]
+);</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="./js/prism.js"></script>
+<script>
+  Prism.plugins.customClass.map({ number: "pr-number" });
+</script>
+

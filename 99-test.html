@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="./css/normalize.css" />
+<link rel="stylesheet" href="./css/bulma.css" />
+<link rel="stylesheet" href="./css/prism.css" />
+<link rel="stylesheet" href="./css/main.css" />
+<script src="./js/waa-slide.js"></script>
+
+<div id="waa-container">
+  <div
+    class="waa-slide has-background-grey-light is-family-primary has-text-white"
+  >
+    <div class="is-flex is-flex-direction-column waa-vh-100 p-3">
+      <div class="waa-text-7">Test</div>
+
+      <div class="columns is-centered is-vcentered waa-h-100">
+        <div class="column is-8">
+          <div class="columns is-centered mt-1">
+            <div class="waa-text-5 is-clickable" onclick="play()">▶️</div>
+            <div class="waa-text-5 is-clickable" onclick="stop()">⏹️</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="./js/prism.js"></script>
+<script>
+  Prism.plugins.customClass.map({ number: "pr-number" });
+</script>
+
+<script src="./js/Tone.js"></script>
+
+<script>
+  function play() {
+    const snare = new Tone.NoiseSynth({
+      envelope: {
+        attack: 0.001,
+        decay: 0.3,
+        sustain: 0.01,
+        release: 0.01,
+      },
+      filterEnvelope: {
+        attack: 0.001,
+        decay: 0.1,
+        sustain: 0.01,
+        release: 0.2,
+      },
+    }).toDestination();
+    
+    snare.triggerAttack();
+
+
+    const kick = new Tone.MembraneSynth({
+      pitchDecay: 0.038,
+      octaves: 4,
+      envelope: {
+        attack: 0.0005,
+        decay: 0.5,
+        sustain: 0.2,
+        release: 0.4,
+      },
+    }).toDestination();
+
+    kick.triggerAttackRelease("A2", "8n");
+
+  }
+
+  function stop() {
+    Tone.Transport.stop();
+  }
+</script>

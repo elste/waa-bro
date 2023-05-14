@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="./css/normalize.css" />
+<link rel="stylesheet" href="./css/bulma.css" />
+<link rel="stylesheet" href="./css/prism.css" />
+<link rel="stylesheet" href="./css/main.css" />
+<script src="./js/waa-slide.js"></script>
+
+<div id="waa-container">
+  <div class="waa-slide has-background-info is-family-primary has-text-white">
+    <div class="is-flex is-flex-direction-column waa-vh-100 p-3">
+      <div class="waa-text-7">Instruments</div>
+
+      <div class="columns is-centered is-vcentered waa-h-100">
+        <div class="column is-5">
+          <div class="waa-text-5 mb-1">Melodia</div>
+
+          <div class="waa-text-2">
+            <pre
+              class="language-js line-numbers"
+            ><code>const melody = new Tone.FMSynth({
+  volume: 0,
+  detune: 0,
+  portamento: 0,
+  harmonicity: 3,
+  oscillator: {
+    partialCount: 0,
+    partials: [],
+    phase: 0,
+    type: "sine",
+  },
+  envelope: {
+    attack: 0.01,
+    attackCurve: "linear",
+    decay: 0.2,
+    decayCurve: "exponential",
+    release: 0.5,
+    releaseCurve: "exponential",
+    sustain: 1,
+  },</code></pre>
+          </div>
+        </div>
+        <div class="column is-5">
+          <div class="waa-spacer-5 mb-1"></div>
+
+          <div class="waa-text-2">
+            <pre class="language-js line-numbers" data-start="21"><code>  modulation: {
+    partialCount: 0,
+    partials: [],
+    phase: 0,
+    type: "square",
+  },
+  modulationEnvelope: {
+    attack: 0.2,
+    attackCurve: "linear",
+    decay: 0.01,
+    decayCurve: "exponential",
+    release: 0.5,
+    releaseCurve: "exponential",
+    sustain: 1,
+  },
+  modulationIndex: 12.22,
+}).toDestination();
+
+melody.triggerAttackRelease("C5", "2n");</code></pre>
+          </div>
+
+          <div class="columns is-centered mt-1">
+            <div class="waa-text-5 is-clickable" onclick="play()">▶️</div>
+          </div>
+        </div>
+      </div>
+      <div class="waa-text-3 has-text-centered">
+        https://tonejs.github.io/examples/fmSynth
+      </div>
+    </div>
+  </div>
+</div>
+<script src="./js/prism.js"></script>
+<script>
+  Prism.plugins.customClass.map({ number: "pr-number" });
+</script>
+
+<script src="./js/Tone.js"></script>
+<script>
+  function play() {
+    const melody = new Tone.FMSynth({
+      volume: 0,
+      detune: 0,
+      portamento: 0,
+      harmonicity: 3,
+      oscillator: {
+        partialCount: 0,
+        partials: [],
+        phase: 0,
+        type: "sine",
+      },
+      envelope: {
+        attack: 0.01,
+        attackCurve: "linear",
+        decay: 0.2,
+        decayCurve: "exponential",
+        release: 0.5,
+        releaseCurve: "exponential",
+        sustain: 1,
+      },
+      modulation: {
+        partialCount: 0,
+        partials: [],
+        phase: 0,
+        type: "square",
+      },
+      modulationEnvelope: {
+        attack: 0.2,
+        attackCurve: "linear",
+        decay: 0.01,
+        decayCurve: "exponential",
+        release: 0.5,
+        releaseCurve: "exponential",
+        sustain: 1,
+      },
+      modulationIndex: 12.22,
+    }).toDestination();
+    melody.triggerAttackRelease("C5", "2n");
+  }
+</script>

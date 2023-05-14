@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="./css/normalize.css" />
+<link rel="stylesheet" href="./css/bulma.css" />
+<link rel="stylesheet" href="./css/prism.css" />
+<link rel="stylesheet" href="./css/main.css" />
+<script src="./js/waa-slide.js"></script>
+
+<div id="waa-container">
+  <div
+    class="waa-slide has-background-grey-light is-family-primary has-text-white"
+  >
+    <div class="is-flex is-flex-direction-column waa-vh-100 p-3">
+      <div class="waa-text-7">Nodes</div>
+
+      <div class="columns is-centered is-vcentered waa-h-100">
+        <div class="column is-5">
+          <div class="waa-text-5">
+            <div>AnalyserNode</div>
+            <div>AudioBufferSourceNode</div>
+            <div>AudioDestinationNode</div>
+            <div>AudioNode</div>
+            <div>AudioScheduledSourceNode</div>
+            <div>AudioWorkletNode</div>
+            <div>BiquadFilterNode</div>
+            <div>ChannelMergerNode</div>
+            <div>ChannelSplitterNode</div>
+            <div>ConstantSourceNode</div>
+            <div>ConvolverNode</div>
+          </div>
+        </div>
+        <div class="column is-5">
+          <div class="waa-text-5">
+            <div>DelayNode</div>
+            <div>DynamicsCompressorNode</div>
+            <div>GainNode</div>
+            <div>IIRFilterNode</div>
+            <div>MediaElementAudioSourceNode</div>
+            <div>MediaStreamAudioDestinationNode</div>
+            <div>MediaStreamAudioSourceNode</div>
+            <div>OscillatorNode</div>
+            <div>PannerNode</div>
+            <div>StereoPannerNode</div>
+            <div>WaveShaperNode</div>
+          </div>
+        </div>
+      </div>
+      <div class="waa-text-3 has-text-centered">
+        https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API
+      </div>
+    </div>
+  </div>
+</div>
+<script src="./js/prism.js"></script>
+<script>
+  Prism.plugins.customClass.map({ number: "pr-number" });
+</script>
+
+<script>
+  let context;
+
+  function init() {
+    try {
+      context = new AudioContext();
+    } catch (e) {
+      alert("Web Audio API is not supported");
+    }
+  }
+
+  function play() {
+    const oscNode = context.createOscillator();
+    const gainNode = context.createGain();
+    gainNode.gain.value = 1;
+    oscNode.connect(gainNode);
+    gainNode.connect(context.destination);
+    oscNode.start(context.currentTime);
+    oscNode.stop(context.currentTime + 2);
+    gainNode.gain.setValueAtTime(0.3, context.currentTime + 1);
+  }
+
+  function stop() {
+    if (!!context) context.close();
+  }
+
+  init();
+</script>
