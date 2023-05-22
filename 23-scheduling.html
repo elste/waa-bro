@@ -32,11 +32,11 @@ const synthB = new Tone.AMSynth().toDestination();
 Tone.Transport.bpm.value = 40;
 //play a note every quarter-note
 const loopA = new Tone.Loop(time => {
-  synthA.triggerAttackRelease("G4", "8n", time);
+  synthA.triggerAttackRelease("E4", "8n", time);
 }, "4n").start(0);
 //play another note every off quarter-note, by starting it "8n"
 const loopB = new Tone.Loop(time => {
-  synthB.triggerAttackRelease("E4", "8n", time);
+  synthB.triggerAttackRelease("G4", "8n", time);
 }, "4n").start("8n");
 // the loops start when the Transport is started
 Tone.Transport.start();
@@ -65,11 +65,11 @@ Tone.Transport.bpm.rampTo(800, 20);</code></pre>
     Tone.Transport.bpm.value = 40;
     //play a note every quarter-note
     const loopA = new Tone.Loop((time) => {
-      synthA.triggerAttackRelease("G4", "8n", time);
+      synthA.triggerAttackRelease("E4", "8n", time);
     }, "4n").start(0);
     //play another note every off quarter-note, by starting it "8n"
     const loopB = new Tone.Loop((time) => {
-      synthB.triggerAttackRelease("E4", "8n", time);
+      synthB.triggerAttackRelease("G4", "8n", time);
     }, "4n").start("8n");
     // the loops start when the Transport is started
     Tone.Transport.start();

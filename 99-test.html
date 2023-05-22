@@ -33,37 +33,22 @@
 
 <script>
   function play() {
-    const snare = new Tone.NoiseSynth({
-      envelope: {
-        attack: 0.001,
-        decay: 0.3,
-        sustain: 0.01,
-        release: 0.01,
+    const synth = new Tone.Synth().toDestination();
+
+    const part2 = new Tone.Part(
+      (time, note) => {
+        synth.triggerAttackRelease(note[0], note[1], time);
       },
-      filterEnvelope: {
-        attack: 0.001,
-        decay: 0.1,
-        sustain: 0.01,
-        release: 0.2,
-      },
-    }).toDestination();
-    
-    snare.triggerAttack();
+      [
+        ["0:0", ["C4", "4n"]],
+        ["0:1", ["D4", "4n"]],
+        ["0:2", ["E4", "4n"]],
+        ["0:3", ["F4", "4n"]],
+      ]
+    );
 
-
-    const kick = new Tone.MembraneSynth({
-      pitchDecay: 0.038,
-      octaves: 4,
-      envelope: {
-        attack: 0.0005,
-        decay: 0.5,
-        sustain: 0.2,
-        release: 0.4,
-      },
-    }).toDestination();
-
-    kick.triggerAttackRelease("A2", "8n");
-
+    part2.start(0);
+    Tone.Transport.start();
   }
 
   function stop() {

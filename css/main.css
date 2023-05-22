@@ -4,6 +4,11 @@ html, body {
   
 }
 
+img {
+    border-radius: .3em;
+  
+}
+
 /* pre {
   padding: 0;
   background-color: transparent;

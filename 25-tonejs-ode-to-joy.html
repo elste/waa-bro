@@ -11,31 +11,41 @@
     class="waa-slide has-background-link-dark is-family-primary has-text-white"
   >
     <div class="is-flex is-flex-direction-column waa-vh-100 p-3">
-      <div class="waa-text-7">
-        Ludwig van Beethoven - Ode to Joy - Tone.js ?
-      </div>
+      <div class="waa-text-7">Ludwig van Beethoven - Ode to Joy - Tone.js</div>
 
       <div class="columns is-centered is-vcentered waa-h-100">
-        <div class="column is-8">
+        <div class="column is-10">
           <div class="waa-text-2">
             <pre
               class="language-js line-numbers"
-              data-start="34"
-            ><code>part1.start(0);
-part1.stop("1m");
+            ><code>const synth = new Tone.Synth().toDestination();
+Tone.Transport.bpm.value = 144;
+const playNote = (time, note) => synth.triggerAttackRelease(note[0], note[1], time);
+const part1 = new Tone.Part(playNote,
+  [
+    ['0:0', ['E4','4n']], ['0:1', ['E4','4n']], ['0:2', ['F4','4n']], ['0:3', ['G4','4n']],
+    ['1:0', ['G4','4n']], ['1:1', ['F4','4n']], ['1:2', ['E4','4n']], ['1:3', ['D4','4n']],
+    ['2:0', ['C4','4n']], ['2:1', ['C4','4n']], ['2:2', ['D4','4n']], ['2:3', ['E4','4n']],
+  ]
+);
 
-part2.start("1m");
-part2.stop("2m");
+const part2 = new Tone.Part(playNote, [['0', ['E4','4n+']], ['0:1:2', ['D4','8n']], ['0:2', ['D4','2n']]]);
+const part3 = new Tone.Part(playNote, [['0', ['D4','4n+']], ['0:1:2', ['C4','8n']], ['0:2', ['C4','2n']]]);
 
-part1.start("2m");
+part1.start(0);
 part1.stop("3m");
 
-part3.start("3m");
-part3.stop("4m");
+part2.start("3m");
+part2.stop("4m");
+
+part1.start("4m");
+part1.stop("7m");
+
+part3.start("7m");
+part3.stop("8m");
 
 Tone.Transport.start();</code></pre>
           </div>
-
           <div class="columns is-centered mt-1">
             <div class="waa-text-5 is-clickable" onclick="play()">▶️</div>
             <div class="waa-text-5 is-clickable" onclick="stop()">⏹️</div>
@@ -54,54 +64,49 @@ Tone.Transport.start();</code></pre>
 <script>
   function play() {
     const synth = new Tone.Synth().toDestination();
+    Tone.Transport.bpm.value = 144;
 
-    Tone.Transport.timeSignature = [3, 4];
-    Tone.Transport.bpm.value = 80;
+    const playNote = (time, note) =>
+      synth.triggerAttackRelease(note[0], note[1], time);
 
-    const part1 = new Tone.Part(
-      (time, value) => {
-        synth.triggerAttackRelease(value.note, value.duration, time);
-      },
-      [
-        { time: 0, note: "G4", duration: "8n" },
-        { time: "0:0:2", note: "G4", duration: "8n" },
-        { time: "0:1", note: "A4", duration: "4n" },
-        { time: "0:2", note: "G4", duration: "4n" },
-      ]
-    );
+    const part1 = new Tone.Part(playNote, [
+      ["0:0", ["E4", "4n"]],
+      ["0:1", ["E4", "4n"]],
+      ["0:2", ["F4", "4n"]],
+      ["0:3", ["G4", "4n"]],
+      ["1:0", ["G4", "4n"]],
+      ["1:1", ["F4", "4n"]],
+      ["1:2", ["E4", "4n"]],
+      ["1:3", ["D4", "4n"]],
+      ["2:0", ["C4", "4n"]],
+      ["2:1", ["C4", "4n"]],
+      ["2:2", ["D4", "4n"]],
+      ["2:3", ["E4", "4n"]],
+    ]);
 
-    const part2 = new Tone.Part(
-      (time, value) => {
-        synth.triggerAttackRelease(value.note, value.duration, time);
-      },
-      [
-        { time: 0, note: "C5", duration: "4n" },
-        { time: "0:1", note: "B4", duration: "2n" },
-      ]
-    );
-
-    const part3 = new Tone.Part(
-      (time, value) => {
-        synth.triggerAttackRelease(value.note, value.duration, time);
-      },
-      [
-        { time: 0, note: "D5", duration: "4n" },
-        { time: "0:1", note: "C5", duration: "2n" },
-      ]
-    );
+    const part2 = new Tone.Part(playNote, [
+      ["0", ["E4", "4n+"]],
+      ["0:1:2", ["D4", "8n"]],
+      ["0:2", ["D4", "2n"]],
+    ]);
+    const part3 = new Tone.Part(playNote, [
+      ["0", ["D4", "4n+"]],
+      ["0:1:2", ["C4", "8n"]],
+      ["0:2", ["C4", "2n"]],
+    ]);
 
     //TRANSPORT
     part1.start(0);
-    part1.stop("1m");
-
-    part2.start("1m");
-    part2.stop("2m");
-
-    part1.start("2m");
     part1.stop("3m");
 
-    part3.start("3m");
-    part3.stop("4m");
+    part2.start("3m");
+    part2.stop("4m");
+
+    part1.start("4m");
+    part1.stop("7m");
+
+    part3.start("7m");
+    part3.stop("8m");
 
     Tone.Transport.start();
   }
