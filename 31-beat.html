@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="./css/normalize.css" />
+<link rel="stylesheet" href="./css/bulma.css" />
+<link rel="stylesheet" href="./css/prism.css" />
+<link rel="stylesheet" href="./css/main.css" />
+<script src="./js/waa-slide.js"></script>
+
+<div id="waa-container">
+  <div
+    class="waa-slide has-background-primary-dark is-family-primary has-text-white"
+  >
+    <div class="is-flex is-flex-direction-column waa-vh-100 p-3">
+      <div class="waa-text-7">My first beat</div>
+
+      <div class="columns is-centered is-vcentered waa-h-100">
+        <div class="column is-10">
+          <div class="waa-text-3">
+            <pre
+              class="language-js line-numbers waa-vh-75"
+            ><code>Tone.Transport.bpm.value = 120;
+const kick = new Tone.MembraneSynth({
+  pitchDecay: 0.038,
+  octaves: 4,
+  envelope: {
+    attack: 0.0005,
+    decay: 0.5,
+    sustain: 0.2,
+    release: 0.4,
+  },
+}).toDestination();
+
+const lowPass = new Tone.Filter({
+  frequency: 8000,
+}).toDestination();
+
+const snare = new Tone.NoiseSynth({
+  volume: 3,
+  noise: {
+    type: "pink",
+    playbackRate: 3,
+  },
+  envelope: {
+    attack: 0.001,
+    decay: 0.2,
+    sustain: 0.15,
+    release: 0.03,
+  },
+});
+
+snare.chain(lowPass, Tone.Destination);
+
+const bass = new Tone.Synth({
+  volume: 9,
+  oscillator: {
+    type: "triangle",
+  },
+}).toDestination();
+
+const chords = new Tone.PolySynth().toDestination();
+chords.set({ volume: -5, detune: -1200 });
+
+const melody = new Tone.FMSynth({
+  volume: -3,
+  detune: 0,
+  portamento: 0,
+  harmonicity: 3,
+  oscillator: {
+    partialCount: 0,
+    partials: [],
+    phase: 0,
+    type: "sine",
+  },
+  envelope: {
+    attack: 0.01,
+    attackCurve: "linear",
+    decay: 0.2,
+    decayCurve: "exponential",
+    release: 0.5,
+    releaseCurve: "exponential",
+    sustain: 1,
+  },
+  modulation: {
+    partialCount: 0,
+    partials: [],
+    phase: 0,
+    type: "square",
+  },
+  modulationEnvelope: {
+    attack: 0.2,
+    attackCurve: "linear",
+    decay: 0.01,
+    decayCurve: "exponential",
+    release: 0.5,
+    releaseCurve: "exponential",
+    sustain: 1,
+  },
+  modulationIndex: 12.22,
+}).toDestination();
+
+const loopKick = new Tone.Loop((time) => {
+  kick.triggerAttackRelease("A2", "8n", time);
+}, "2n").start(0);
+
+const loopSnare = new Tone.Loop((time) => {
+  snare.triggerAttackRelease("16n", time);
+}, "2n").start("4n");
+
+const playBass = (time, note) =>
+  bass.triggerAttackRelease(note[0], note[1], time);
+
+const bassPart1 = new Tone.Part({
+  callback: playBass,
+  events: [
+    ["0:0", ["E2", "8n"]],
+    ["0:1", ["E2", "8n"]],
+    ["0:2", ["G2", "8n"]],
+    ["0:2:2", ["F2", "8n"]],
+    ["0:3", ["E2", "8n"]],
+    ["0:3:2", ["F2", "8n"]],
+  ],
+  loop: 3,
+});
+
+const bassPart2 = new Tone.Part(playBass, [
+  ["0:0", ["G2", "4n"]],
+  ["0:1", ["A2", "4n"]],
+  ["0:2", ["F2", "4n"]],
+  ["0:3", ["G2", "4n"]],
+]);
+
+bassPart1.start(0).stop("3m");
+bassPart2.start("3m").stop("4m");
+bassPart1.start("4m").stop("7m");
+bassPart2.start("7m").stop("8m");
+bassPart1.start("8m").stop("11m");
+bassPart2.start("11m").stop("12m");
+
+const playChords = (time, note) =>
+  chords.triggerAttackRelease(note[0], note[1], time);
+
+const chordsPart1 = new Tone.Part({
+  callback: playChords,
+  events: [
+    ["0:0", [["E4", "G#4", "B4"], "8n"]],
+    ["0:1", [["E4", "G#4", "B4"], "8n"]],
+    ["0:2", [["G4", "B4", "D5"], "8n"]],
+    ["0:2:2", [["F4", "A4", "C5"], "8n"]],
+    ["0:3", [["E4", "G#4", "B4"], "8n"]],
+    ["0:3:2", [["F4", "A4", "C5"], "8n"]],
+  ],
+  loop: 3,
+});
+
+const chordsPart3 = new Tone.Part(playChords, [
+  ["0:0", [["G4", "B4", "D5"], "4n"]],
+  ["0:1", [["A2", "C#4", "E4"], "4n"]],
+  ["0:2", [["F4", "A4", "C5"], "4n"]],
+  ["0:3", [["G4", "B4", "D5"], "4n"]],
+]);
+
+chordsPart1.start("4m").stop("7m");
+chordsPart3.start("7m").stop("8m");
+chordsPart1.start("8m").stop("11m");
+chordsPart3.start("11m").stop("12m");
+
+const playMelody = (time, note) =>
+melody.triggerAttackRelease(note[0], note[1], time);
+
+const melodyPart1 = new Tone.Part({
+  callback: playMelody,
+  events: [
+    ["0:0", ["E3", "16n"]],
+    ["0:0:2", ["E3", "16n"]],
+    ["0:1", ["E3", "16n"]],
+    ["0:1:2", ["E3", "16n"]],
+
+    ["0:2", ["G3", "16n"]],
+    ["0:2:1", ["G3", "16n"]],
+    ["0:2:2", ["F3", "16n"]],
+    ["0:2:3", ["F3", "16n"]],
+
+    ["0:3", ["E3", "16n"]],
+    ["0:3:1", ["E3", "16n"]],
+
+    ["0:3:2", ["F3", "16n"]],
+    ["0:3:3", ["F3", "16n"]],
+  ],
+  loop: 3,
+});
+
+const melodyPart2 = new Tone.Part(playMelody, [
+  ["0:0", ["G3", "4n"]],
+  ["0:1", ["A3", "4n"]],
+  ["0:2", ["F3", "4n"]],
+  ["0:3", ["G3", "4n"]],
+]);
+
+melodyPart1.start("8m").stop("11m");
+melodyPart2.start("11m").stop("12m");
+
+
+loopKick.stop("11m")
+loopSnare.stop("11m")
+
+Tone.Transport.start().stop("12m");</code></pre>
+          </div>
+          <div class="columns is-centered mt-1">
+            <div class="waa-text-5 is-clickable" onclick="play()">▶️</div>
+            <div class="waa-text-5 is-clickable" onclick="stop()">⏹️</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="./js/prism.js"></script>
+<script>
+  Prism.plugins.customClass.map({ number: "pr-number" });
+</script>
+
+<script src="./js/Tone.js"></script>
+<script>
+  function play() {
+    Tone.context.resume();
+    Tone.Transport.cancel();
+    Tone.Transport.stop();
+    Tone.Transport.bpm.value = 120;
+
+    const kick = new Tone.MembraneSynth({
+      pitchDecay: 0.038,
+      octaves: 4,
+      envelope: {
+        attack: 0.0005,
+        decay: 0.5,
+        sustain: 0.2,
+        release: 0.4,
+      },
+    }).toDestination();
+
+    const lowPass = new Tone.Filter({
+      frequency: 8000,
+    }).toDestination();
+
+    const snare = new Tone.NoiseSynth({
+      volume: 3,
+      noise: {
+        type: "pink",
+        playbackRate: 3,
+      },
+      envelope: {
+        attack: 0.001,
+        decay: 0.2,
+        sustain: 0.15,
+        release: 0.03,
+      },
+    });
+
+    snare.chain(lowPass, Tone.Destination);
+
+    const bass = new Tone.Synth({
+      volume: 9,
+      oscillator: {
+        type: "triangle",
+      },
+    }).toDestination();
+
+    const chords = new Tone.PolySynth().toDestination();
+    chords.set({ volume: -5, detune: -1200 });
+
+    const melody = new Tone.FMSynth({
+      volume: -3,
+      detune: 0,
+      portamento: 0,
+      harmonicity: 3,
+      oscillator: {
+        partialCount: 0,
+        partials: [],
+        phase: 0,
+        type: "sine",
+      },
+      envelope: {
+        attack: 0.01,
+        attackCurve: "linear",
+        decay: 0.2,
+        decayCurve: "exponential",
+        release: 0.5,
+        releaseCurve: "exponential",
+        sustain: 1,
+      },
+      modulation: {
+        partialCount: 0,
+        partials: [],
+        phase: 0,
+        type: "square",
+      },
+      modulationEnvelope: {
+        attack: 0.2,
+        attackCurve: "linear",
+        decay: 0.01,
+        decayCurve: "exponential",
+        release: 0.5,
+        releaseCurve: "exponential",
+        sustain: 1,
+      },
+      modulationIndex: 12.22,
+    }).toDestination();
+
+    const loopKick = new Tone.Loop((time) => {
+      kick.triggerAttackRelease("A2", "8n", time);
+    }, "2n").start(0);
+
+    const loopSnare = new Tone.Loop((time) => {
+      snare.triggerAttackRelease("16n", time);
+    }, "2n").start("4n");
+
+    const playBass = (time, note) =>
+      bass.triggerAttackRelease(note[0], note[1], time);
+
+    const bassPart1 = new Tone.Part({
+      callback: playBass,
+      events: [
+        ["0:0", ["E2", "8n"]],
+        ["0:1", ["E2", "8n"]],
+        ["0:2", ["G2", "8n"]],
+        ["0:2:2", ["F2", "8n"]],
+        ["0:3", ["E2", "8n"]],
+        ["0:3:2", ["F2", "8n"]],
+      ],
+      loop: 3,
+    });
+
+    const bassPart2 = new Tone.Part(playBass, [
+      ["0:0", ["G2", "4n"]],
+      ["0:1", ["A2", "4n"]],
+      ["0:2", ["F2", "4n"]],
+      ["0:3", ["G2", "4n"]],
+    ]);
+
+    bassPart1.start(0).stop("3m");
+    bassPart2.start("3m").stop("4m");
+    bassPart1.start("4m").stop("7m");
+    bassPart2.start("7m").stop("8m");
+    bassPart1.start("8m").stop("11m");
+    bassPart2.start("11m").stop("12m");
+
+    const playChords = (time, note) =>
+      chords.triggerAttackRelease(note[0], note[1], time);
+
+    const chordsPart1 = new Tone.Part({
+      callback: playChords,
+      events: [
+        ["0:0", [["E4", "G#4", "B4"], "8n"]],
+        ["0:1", [["E4", "G#4", "B4"], "8n"]],
+        ["0:2", [["G4", "B4", "D5"], "8n"]],
+        ["0:2:2", [["F4", "A4", "C5"], "8n"]],
+        ["0:3", [["E4", "G#4", "B4"], "8n"]],
+        ["0:3:2", [["F4", "A4", "C5"], "8n"]],
+      ],
+      loop: 3,
+    });
+
+    const chordsPart3 = new Tone.Part(playChords, [
+      ["0:0", [["G4", "B4", "D5"], "4n"]],
+      ["0:1", [["A2", "C#4", "E4"], "4n"]],
+      ["0:2", [["F4", "A4", "C5"], "4n"]],
+      ["0:3", [["G4", "B4", "D5"], "4n"]],
+    ]);
+
+    chordsPart1.start("4m").stop("7m");
+    chordsPart3.start("7m").stop("8m");
+    chordsPart1.start("8m").stop("11m");
+    chordsPart3.start("11m").stop("12m");
+
+    const playMelody = (time, note) =>
+      melody.triggerAttackRelease(note[0], note[1], time);
+
+    const melodyPart1 = new Tone.Part({
+      callback: playMelody,
+      events: [
+        ["0:0", ["E3", "16n"]],
+        ["0:0:2", ["E3", "16n"]],
+        ["0:1", ["E3", "16n"]],
+        ["0:1:2", ["E3", "16n"]],
+
+        ["0:2", ["G3", "16n"]],
+        ["0:2:1", ["G3", "16n"]],
+        ["0:2:2", ["F3", "16n"]],
+        ["0:2:3", ["F3", "16n"]],
+
+        ["0:3", ["E3", "16n"]],
+        ["0:3:1", ["E3", "16n"]],
+
+        ["0:3:2", ["F3", "16n"]],
+        ["0:3:3", ["F3", "16n"]],
+      ],
+      loop: 3,
+    });
+
+    const melodyPart2 = new Tone.Part(playMelody, [
+      ["0:0", ["G3", "4n"]],
+      ["0:1", ["A3", "4n"]],
+      ["0:2", ["F3", "4n"]],
+      ["0:3", ["G3", "4n"]],
+    ]);
+
+    melodyPart1.start("8m").stop("11m");
+    melodyPart2.start("11m").stop("12m");
+
+    loopKick.stop("11m");
+    loopSnare.stop("11m");
+
+    Tone.Transport.start().stop("12m");
+  }
+
+  function stop() {
+    Tone.Transport.stop();
+  }
+</script>

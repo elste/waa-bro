@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="./css/normalize.css" />
+<link rel="stylesheet" href="./css/bulma.css" />
+<link rel="stylesheet" href="./css/prism.css" />
+<link rel="stylesheet" href="./css/main.css" />
+<script src="./js/waa-slide.js"></script>
+
+<div id="waa-container">
+  <div class="waa-slide has-background-info is-family-primary has-text-white">
+    <div class="is-flex is-flex-direction-column waa-vh-100 p-3">
+      <div class="waa-text-7">Argomenti correlati</div>
+
+      <div class="columns is-centered is-vcentered waa-h-100">
+        <div class="column is-5">
+          <div
+            class="has-text-white has-text-weight-light is-flex is-flex-direction-column is-justify-content-space-around"
+          >
+            <div class="columns">
+              <div class="column">
+                <div class="waa-text-5">Web Audio API</div>
+                <div class="waa-text-3">Audio input and Recording</div>
+                <div class="waa-text-3">Sound processing</div>
+              </div>
+            </div>
+            <div class="waa-spacer-5"></div>
+            <div class="columns">
+              <div class="column">
+                <div class="waa-text-5">Web Speech API</div>
+                <div class="waa-text-3">SpeechSynthesis (Text-to-speech)</div>
+                <div class="waa-text-3">SpeechRecognition (Speech-to-text)</div>
+              </div>
+            </div>
+            <div class="waa-spacer-5"></div>
+
+            <div class="columns">
+              <div class="column">
+                <div class="waa-text-5">Web MIDI API</div>
+                <div class="waa-text-3">
+                  Connessione e interazione con dispositivi MIDI
+                </div>
+                <div class="waa-text-3">
+                  (Musical Instrument Digital Interface)
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="./js/prism.js"></script>
+<script>
+  Prism.plugins.customClass.map({ number: "pr-number" });
+</script>

@@ -15,23 +15,25 @@
         <div class="column is-8">
           <div class="waa-text-5 mb-1">Snare - rullante</div>
 
-          <div class="waa-text-3">
+          <div class="waa-text-2">
             <pre
-              class="language-js line-numbers"
-            ><code>const snare = new Tone.NoiseSynth({
+              class="language-js line-numbers" 
+            ><code>const lowPass = new Tone.Filter({ frequency: 8000 });
+const snare = new Tone.NoiseSynth({
+  volume: 3,
+  noise: {
+    type: "pink",
+    playbackRate: 3,
+  },
   envelope: {
     attack: 0.001,
-    decay: 0.3,
-    sustain: 0.01,
-    release: 0.01,
+    decay: 0.2,
+    sustain: 0.15,
+    release: 0.03,
   },
-  filterEnvelope: {
-    attack: 0.001,
-    decay: 0.1,
-    sustain: 0.01,
-    release: 0.2,
-  }
-}).toDestination();
+});
+
+snare.chain(lowPass, Tone.Destination);
 
 snare.triggerAttackRelease("8n");</code></pre>
           </div>
@@ -42,7 +44,7 @@ snare.triggerAttackRelease("8n");</code></pre>
         </div>
       </div>
       <div class="waa-text-3 has-text-centered">
-        https://www.guitarland.com/javascripts/instruments.js
+        https://www.devbridge.com/articles/tonejs-coding-music-production-guide
       </div>
     </div>
   </div>
@@ -55,20 +57,25 @@ snare.triggerAttackRelease("8n");</code></pre>
 <script src="./js/Tone.js"></script>
 <script>
   function play() {
+    const lowPass = new Tone.Filter({
+      frequency: 8000,
+    }).toDestination();
+
     const snare = new Tone.NoiseSynth({
+      volume: 3,
+      noise: {
+        type: "pink",
+        playbackRate: 3,
+      },
       envelope: {
         attack: 0.001,
-        decay: 0.3,
-        sustain: 0.01,
-        release: 0.01,
+        decay: 0.2,
+        sustain: 0.15,
+        release: 0.03,
       },
-      filterEnvelope: {
-        attack: 0.001,
-        decay: 0.1,
-        sustain: 0.01,
-        release: 0.2,
-      },
-    }).toDestination();
+    });
+
+    snare.chain(lowPass, Tone.Destination);
 
     snare.triggerAttackRelease("8n");
   }

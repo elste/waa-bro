@@ -32,17 +32,10 @@ const part1 = new Tone.Part(playNote,
 const part2 = new Tone.Part(playNote, [['0', ['E4','4n+']], ['0:1:2', ['D4','8n']], ['0:2', ['D4','2n']]]);
 const part3 = new Tone.Part(playNote, [['0', ['D4','4n+']], ['0:1:2', ['C4','8n']], ['0:2', ['C4','2n']]]);
 
-part1.start(0);
-part1.stop("3m");
-
-part2.start("3m");
-part2.stop("4m");
-
-part1.start("4m");
-part1.stop("7m");
-
-part3.start("7m");
-part3.stop("8m");
+part1.start(0).stop("3m");
+part2.start("3m").stop("4m");
+part1.start("4m").stop("7m");
+part3.start("7m").stop("8m");
 
 Tone.Transport.start();</code></pre>
           </div>
@@ -96,17 +89,10 @@ Tone.Transport.start();</code></pre>
     ]);
 
     //TRANSPORT
-    part1.start(0);
-    part1.stop("3m");
-
-    part2.start("3m");
-    part2.stop("4m");
-
-    part1.start("4m");
-    part1.stop("7m");
-
-    part3.start("7m");
-    part3.stop("8m");
+    part1.start(0).stop("3m");
+    part2.start("3m").stop("4m");
+    part1.start("4m").stop("7m");
+    part3.start("7m").stop("8m");
 
     Tone.Transport.start();
   }

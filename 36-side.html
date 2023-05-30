@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="./css/normalize.css" />
+<link rel="stylesheet" href="./css/bulma.css" />
+<link rel="stylesheet" href="./css/prism.css" />
+<link rel="stylesheet" href="./css/main.css" />
+<script src="./js/waa-slide.js"></script>
+
+<div id="waa-container">
+  <div class="waa-slide has-background-info is-family-primary has-text-white">
+    <div class="is-flex is-flex-direction-column waa-vh-100 p-3">
+      <div class="waa-text-7">Side dish 2</div>
+
+      <div class="columns is-centered is-vcentered waa-h-100">
+        <div class="column is-10">
+          <div
+            class="has-text-weight-light is-flex is-flex-direction-column is-justify-content-space-around"
+          >
+            <div class="columns">
+              <div class="column">
+                <div class="waa-text-5">Tonal</div>
+              </div>
+            </div>
+
+            <div class="columns">
+              <div class="column">
+                <div class="waa-text-4">
+                  is a music theory library. Contains functions to manipulate
+                  tonal elements of music (note, intervals, chords, scales,
+                  modes, keys). It deals with abstractions (not actual music or
+                  sound).
+                </div>
+              </div>
+            </div>
+
+            <div class="columns">
+              <div class="column">
+                <div class="waa-text-4">
+                  https://github.com/tonaljs/tonal
+                </div>
+              </div>
+            </div>
+
+            <div class="columns">
+              <div class="column">
+                <div class="waa-text-2">
+                  <pre
+                    class="language-js line-numbers"
+                  ><code>import { Interval, Note, Scale } from "tonal";
+
+Note.freq("a4").freq; // => 440
+Note.accidentals("c#2"); // => '#'
+Note.transpose("C4", "5P"); // => "G4"
+Interval.semitones("5P"); // => 7
+Interval.distance("C4", "G4"); // => "5P"
+
+Scale.get("C major").notes; // => ["C", "D", "E", "F", "G", "A", "B"];
+[1, 3, 5, 7].map(Scale.degrees("C major")); // => ["C", "E", "G", "B"]
+
+Chord.get("Cmaj7").name; // => "C major seventh"</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="./js/prism.js"></script>
+<script>
+  Prism.plugins.customClass.map({ number: "pr-number" });
+</script>

@@ -7,14 +7,48 @@
 <script src="./js/waa-slide.js"></script>
 
 <div id="waa-container">
-  <div
-    class="waa-slide has-background-black is-family-primary has-text-white"
-  >
+  <div class="waa-slide has-background-black is-family-primary has-text-white">
     <div class="is-flex is-flex-direction-column waa-vh-100 p-3">
-      <div class="waa-text-7">Distortion?</div>
+      <div class="waa-text-7">Distortion</div>
+      <pre
+        class="language-js line-numbers waa-vh-75"
+      ><code>var oscillatorNode = context.createOscillator();
+var oscillatorGainNode = context.createGain();
+var finish = context.destination;
 
+var distortionGainNode = context.createGain();
+var distortionNode = context.createWaveShaper();
+
+function makeDistortionCurve(amount) {
+  var k = amount,
+    n_samples = typeof sampleRate === "number" ? sampleRate : 44100,
+    curve = new Float32Array(n_samples),
+    deg = Math.PI / 180,
+    i = 0,
+    x;
+  for (; i < n_samples; ++i) {
+    x = (i * 2) / n_samples - 1;
+    curve[i] =
+      ((3 + k) * Math.atan(Math.sinh(x * 0.25) * 5)) /
+      (Math.PI + k * Math.abs(x));
+  }
+  return curve;
+}
+
+distortionNode.curve = makeDistortionCurve(400);
+
+oscillatorNode.connect(oscillatorGainNode);
+oscillatorGainNode.connect(distortionGainNode);
+distortionGainNode.connect(distortionNode);
+distortionNode.connect(finish);
+
+oscillatorNode.start(0);</code></pre>
+      <div class="columns is-centered mt-1">
+        <div class="waa-text-5 is-clickable" onclick="play()">▶️</div>
+        <div class="waa-text-5 is-clickable" onclick="stop()">⏹️</div>
+      </div>
       <div class="waa-text-3 has-text-centered">
-        https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API
+        https://alexanderleon.medium.com/web-audio-series-part-2-designing-distortion-using-javascript-and-the-web-audio-api-446301565541
       </div>
     </div>
   </div>
@@ -36,14 +70,39 @@
   }
 
   function play() {
-    const oscNode = context.createOscillator();
-    const gainNode = context.createGain();
-    gainNode.gain.value = 1;
-    oscNode.connect(gainNode);
-    gainNode.connect(context.destination);
-    oscNode.start(context.currentTime);
-    oscNode.stop(context.currentTime + 2);
-    gainNode.gain.setValueAtTime(0.3, context.currentTime + 1);
+    var oscillatorNode = context.createOscillator();
+    var oscillatorGainNode = context.createGain();
+
+    var finish = context.destination;
+
+    var distortionGainNode = context.createGain();
+    distortionGainNode.gain = 0.3;
+    var distortionNode = context.createWaveShaper();
+
+    function makeDistortionCurve(amount) {
+      var k = amount,
+        n_samples = typeof sampleRate === "number" ? sampleRate : 44100,
+        curve = new Float32Array(n_samples),
+        deg = Math.PI / 180,
+        i = 0,
+        x;
+      for (; i < n_samples; ++i) {
+        x = (i * 2) / n_samples - 1;
+        curve[i] =
+          ((3 + k) * Math.atan(Math.sinh(x * 0.25) * 5)) /
+          (Math.PI + k * Math.abs(x));
+      }
+      return curve;
+    }
+
+    distortionNode.curve = makeDistortionCurve(400);
+
+    oscillatorNode.connect(oscillatorGainNode);
+    oscillatorGainNode.connect(distortionGainNode);
+    distortionGainNode.connect(distortionNode);
+    distortionNode.connect(finish);
+
+    oscillatorNode.start(0);
   }
 
   function stop() {
