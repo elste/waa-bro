@@ -17,9 +17,8 @@
 
           <div class="waa-text-2">
             <pre
-              class="language-js line-numbers" 
-            ><code>const lowPass = new Tone.Filter({ frequency: 8000 });
-const snare = new Tone.NoiseSynth({
+              class="language-js line-numbers"
+            ><code>const snare = new Tone.NoiseSynth({
   volume: 3,
   noise: {
     type: "pink",
@@ -32,6 +31,8 @@ const snare = new Tone.NoiseSynth({
     release: 0.03,
   },
 });
+
+const lowPass = new Tone.Filter({ frequency: 8000 });
 
 snare.chain(lowPass, Tone.Destination);
 
